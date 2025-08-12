@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { telegramService } from '../../../lib/services/telegramNotifications'
 
 // This endpoint simulates real-time portfolio and agent updates
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const subscriberCount = await telegramService.getSubscriberCount()
     

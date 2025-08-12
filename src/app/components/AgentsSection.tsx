@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Brain, TrendingUp, Shield, Cpu, Activity, Eye, Zap, Target, Users, MessageSquare, Sparkles } from 'lucide-react'
+import { Brain, TrendingUp, Shield, Cpu, Activity, Eye, Zap, Target, Users, Sparkles } from 'lucide-react'
 import { useState } from 'react'
 import { useAgents } from '../../lib/hooks/useAgents'
 import { useRealtime } from '../../lib/hooks/useRealtime'

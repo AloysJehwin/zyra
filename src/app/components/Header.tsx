@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Menu, X, Brain, Cpu, TrendingUp } from 'lucide-react'
+import { Menu, X, Brain, Cpu } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Header() {
@@ -47,7 +47,7 @@ export default function Header() {
               { name: 'Portfolio', href: '#portfolio' },
               { name: 'Architecture', href: '#architecture' },
               { name: 'Features', href: '#features' }
-            ].map((item, index) => (
+            ].map((item) => (
               <motion.a
                 key={item.name}
                 href={item.href}

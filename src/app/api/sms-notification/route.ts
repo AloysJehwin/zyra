@@ -89,7 +89,7 @@ export async function POST(request: NextRequest) {
 }
 
 // Simulate SMS sending (replace with real SMS service integration)
-async function sendSMS(mobile: string, message: string, agentName?: string): Promise<boolean> {
+async function sendSMS(_mobile: string, _message: string, _agentName?: string): Promise<boolean> {
   // Simulate network delay
   await new Promise(resolve => setTimeout(resolve, 100 + Math.random() * 200))
   

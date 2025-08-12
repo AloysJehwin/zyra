@@ -15,7 +15,7 @@ const userProfiles = new Map<number, {
   notifications: string[]
   personality: string
   onboardingComplete: boolean
-  lastAnalysis?: any
+  lastAnalysis?: Record<string, unknown>
 }>()
 
 const onboardingQuestions = [
@@ -71,7 +71,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get or create user profile
-    let profile = userProfiles.get(chatId) || {
+    const profile = userProfiles.get(chatId) || {
       name: '',
       experience: '',
       riskTolerance: '',
@@ -86,9 +86,9 @@ export async function POST(request: NextRequest) {
     const question = onboardingQuestions.find(q => q.id === questionId)
     if (question) {
       if (question.type === 'multiple') {
-        profile[question.key as keyof typeof profile] = answer as any
+        ;(profile as Record<string, unknown>)[question.key] = answer
       } else {
-        profile[question.key as keyof typeof profile] = answer as any
+        ;(profile as Record<string, unknown>)[question.key] = answer
       }
     }
 

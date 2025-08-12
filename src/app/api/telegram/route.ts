@@ -6,7 +6,7 @@ let bot: TelegramBot | null = null
 if (process.env.TELEGRAM_BOT_TOKEN) {
   try {
     bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: false })
-  } catch (error) {
+  } catch {
     console.error('Failed to initialize Telegram bot:', error)
   }
 }
@@ -54,7 +54,7 @@ export async function POST(request: NextRequest) {
               
               await bot.sendMessage(chatId, onboardingData.message)
             }
-          } catch (error) {
+          } catch {
             // Fallback if onboarding service is down
             await bot.sendMessage(chatId, 
               `🤖 Welcome to ZYRA, ${firstName}!\n\n` +
@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
           try {
             const statusMessage = await getPortfolioStatus()
             await bot.sendMessage(chatId, statusMessage, { parse_mode: 'Markdown' })
-          } catch (error) {
+          } catch {
             await bot.sendMessage(chatId, '❌ Unable to fetch portfolio status at this time.')
           }
           break
@@ -98,7 +98,7 @@ export async function POST(request: NextRequest) {
           try {
             const agentsMessage = await getAgentsStatus()
             await bot.sendMessage(chatId, agentsMessage, { parse_mode: 'Markdown' })
-          } catch (error) {
+          } catch {
             await bot.sendMessage(chatId, '❌ Unable to fetch agents status at this time.')
           }
           break
@@ -132,7 +132,7 @@ export async function POST(request: NextRequest) {
           try {
             const marketMessage = await getMarketInsights()
             await bot.sendMessage(chatId, marketMessage, { parse_mode: 'Markdown' })
-          } catch (error) {
+          } catch {
             await bot.sendMessage(chatId, '❌ Unable to fetch market insights at this time.')
           }
           break
@@ -143,7 +143,7 @@ export async function POST(request: NextRequest) {
             const onboardingResponse = await fetch(`http://localhost:3001/api/user-onboarding?action=start`)
             const onboardingData = await onboardingResponse.json()
             await bot.sendMessage(chatId, onboardingData.message)
-          } catch (error) {
+          } catch {
             await bot.sendMessage(chatId, '❌ Setup service temporarily unavailable. Try again later.')
           }
           break
@@ -180,7 +180,7 @@ export async function POST(request: NextRequest) {
             } else {
               await bot.sendMessage(chatId, 'Please complete setup first with /setup to get personalized analysis!')
             }
-          } catch (error) {
+          } catch {
             await bot.sendMessage(chatId, '❌ Analysis service temporarily unavailable. Try again later.')
           }
           break
@@ -206,7 +206,7 @@ export async function POST(request: NextRequest) {
             } else {
               await bot.sendMessage(chatId, 'No profile found. Use /setup to create your profile!')
             }
-          } catch (error) {
+          } catch {
             await bot.sendMessage(chatId, '❌ Profile service temporarily unavailable.')
           }
           break
@@ -219,7 +219,7 @@ export async function POST(request: NextRequest) {
               await bot.sendMessage(chatId, 
                 `Thanks for your response! 🎯\n\nIf you're setting up your profile, I'll process that. Otherwise, use /help to see available commands.`
               )
-            } catch (error) {
+            } catch {
               await bot.sendMessage(chatId, 
                 `🤔 I don't understand that command.\n\n` +
                 `Use /help to see available commands.`
@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ status: 'ok' })
-  } catch (error) {
+  } catch {
     console.error('Telegram webhook error:', error)
     return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 })
   }
@@ -281,7 +281,7 @@ export async function GET(request: NextRequest) {
           availableActions: ['send_notification', 'subscribers', 'status']
         })
     }
-  } catch (error) {
+  } catch {
     console.error('Telegram GET error:', error)
     return NextResponse.json({ error: 'Request failed' }, { status: 500 })
   }

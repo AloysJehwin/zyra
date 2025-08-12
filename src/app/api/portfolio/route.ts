@@ -153,7 +153,7 @@ export async function GET(request: NextRequest) {
     }
     
     return NextResponse.json(dynamicData)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch portfolio' }, { status: 500 })
   }
 }
@@ -201,7 +201,7 @@ export async function POST(request: NextRequest) {
       default:
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update portfolio' }, { status: 500 })
   }
 }

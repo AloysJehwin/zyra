@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Code, Cpu, Database, Globe, Layers, Zap, Brain, Shield } from 'lucide-react'
+import { Code, Cpu, Globe, Layers, Zap, Brain, Shield } from 'lucide-react'
 
 export default function TechStackSection() {
   const techCategories = [
@@ -73,14 +73,14 @@ export default function TechStackSection() {
     }
   ]
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Core': return 'text-green-400 bg-green-400/20'
-      case 'Active': return 'text-blue-400 bg-blue-400/20'
-      case 'Integrated': return 'text-purple-400 bg-purple-400/20'
-      default: return 'text-gray-400 bg-gray-400/20'
-    }
-  }
+  // const getStatusColor = (status: string) => {
+  //   switch (status) {
+  //     case 'Core': return 'text-green-400 bg-green-400/20'
+  //     case 'Active': return 'text-blue-400 bg-blue-400/20'
+  //     case 'Integrated': return 'text-purple-400 bg-purple-400/20'
+  //     default: return 'text-gray-400 bg-gray-400/20'
+  //   }
+  // }
 
   return (
     <section id="tech-stack" className="py-20 px-6">

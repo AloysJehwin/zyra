@@ -137,7 +137,7 @@ export async function GET(request: NextRequest) {
     }))
     
     return NextResponse.json(freshAgents)
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch agents' }, { status: 500 })
   }
 }
@@ -156,7 +156,7 @@ export async function POST(request: NextRequest) {
     }
     
     return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update agent' }, { status: 500 })
   }
 }

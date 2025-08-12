@@ -116,7 +116,28 @@ export async function POST(request: NextRequest) {
   }
 }
 
-async function analyzeWithAgent(agent: any, userProfile: any, marketData: any) {
+interface Agent {
+  name: string
+  description: string
+  systemPrompt: string
+  icon: string
+}
+
+interface UserProfile {
+  name?: string
+  experience?: string
+  riskTolerance?: string
+  goals?: string[]
+  preferredAssets?: string[]
+}
+
+interface MarketData {
+  ethTrend?: string
+  gasPrice?: string
+  tvlTrend?: string
+}
+
+async function analyzeWithAgent(agent: Agent, userProfile: UserProfile, marketData: MarketData) {
   try {
     const contextPrompt = `
     User Profile:
@@ -174,7 +195,7 @@ async function analyzeWithAgent(agent: any, userProfile: any, marketData: any) {
   }
 }
 
-async function activateAgent(agentType: string, userProfile: any) {
+async function activateAgent(agentType: string, userProfile: UserProfile) {
   const agent = agents[agentType as keyof typeof agents]
   
   agentStates.set(agentType, {

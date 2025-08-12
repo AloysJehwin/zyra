@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
     start(controller) {
       const encoder = new TextEncoder()
       
-      const sendEvent = (data: any, event?: string) => {
+      const sendEvent = (data: Record<string, unknown>, event?: string) => {
         const message = `${event ? `event: ${event}\n` : ''}data: ${JSON.stringify(data)}\n\n`
         controller.enqueue(encoder.encode(message))
       }
@@ -127,7 +127,31 @@ function generateRealtimeUpdates(type: string) {
   return updates
 }
 
-async function sendTelegramNotifications(updates: any[]) {
+interface Update {
+  type: string
+  agentId?: number
+  performance?: {
+    accuracy: string
+    lastActivity: string
+    tasksCompleted: number
+  }
+  totalValue?: number
+  dailyChange?: number
+  activePositions?: number
+  protocol?: string
+  apy?: string
+  tvl?: string
+  action?: string
+  txId?: string
+  amount?: string
+  status?: string
+  gasOptimization?: string
+  level?: string
+  message?: string
+  timestamp: string
+}
+
+async function sendTelegramNotifications(updates: Update[]) {
   for (const update of updates) {
     try {
       let message = ''

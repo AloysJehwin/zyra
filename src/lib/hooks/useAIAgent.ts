@@ -16,7 +16,7 @@ export interface AIAgentResponse {
 
 export interface AIAgentError {
   error: string
-  details?: any
+  details?: unknown
 }
 
 export function useAIAgent() {
@@ -26,7 +26,7 @@ export function useAIAgent() {
   const queryAgent = async (
     agent: 'market-intelligence' | 'risk-manager' | 'yield-hunter',
     query: string,
-    context?: any
+    context?: Record<string, unknown>
   ): Promise<AIAgentResponse | null> => {
     setLoading(true)
     setError(null)
@@ -142,7 +142,7 @@ export function useRiskManager() {
     )
   }
 
-  const getPortfolioRiskAnalysis = async (positions: any[]) => {
+  const getPortfolioRiskAnalysis = async (positions: Record<string, unknown>[]) => {
     return queryAgent('risk-manager',
       "Analyze this portfolio for overall risk exposure and provide recommendations for risk mitigation.",
       { positions }

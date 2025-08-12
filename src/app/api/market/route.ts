@@ -147,7 +147,7 @@ export async function GET(request: NextRequest) {
       default:
         return NextResponse.json(dynamicData)
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch market data' }, { status: 500 })
   }
 }
@@ -155,7 +155,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { action, data } = body
+    const { action } = body
     
     switch (action) {
       case 'scan_opportunities':
@@ -186,7 +186,7 @@ export async function POST(request: NextRequest) {
       default:
         return NextResponse.json({ error: 'Invalid action' }, { status: 400 })
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to process market request' }, { status: 500 })
   }
 }

@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 export default function HeroSection() {
   const { address, isConnected } = useAccount()
-  const { deployAgents, loading: portfolioLoading } = usePortfolio()
+  const { loading: portfolioLoading } = usePortfolio()
   const [isDeploying, setIsDeploying] = useState(false)
   const [deploymentResult, setDeploymentResult] = useState<string | null>(null)
   const [deploymentStep, setDeploymentStep] = useState<number>(0)
@@ -176,7 +176,7 @@ export default function HeroSection() {
             message: `🤖 ${agent.name} Activated!\n\n✅ Configured for ${userAnswers.experience} level\n📋 ${agent.description}\n🎯 Optimized for ${userAnswers.goals}\n${mobileNumber ? '📱 SMS alerts enabled' : ''}`,
             type: 'success'
           })}`)
-        } catch (e) {
+        } catch {
           // Silent fail for AI activation
         }
       }
@@ -214,7 +214,7 @@ export default function HeroSection() {
             })
           })
         }
-      } catch (e) {}
+      } catch {}
 
     } catch (error) {
       setDeploymentResult(error instanceof Error ? error.message : 'Failed to deploy agents')
@@ -374,7 +374,7 @@ export default function HeroSection() {
               { label: 'Average APY', value: '15%+', color: 'text-green-400' },
               { label: 'Gas Savings', value: '30%', color: 'text-blue-400' },
               { label: 'Risk Reduction', value: '26%', color: 'text-purple-400' }
-            ].map((stat, index) => (
+            ].map((stat) => (
               <motion.div
                 key={stat.label}
                 className="glass-effect px-6 py-4 rounded-xl"

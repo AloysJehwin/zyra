@@ -101,11 +101,12 @@ export async function POST(request: NextRequest) {
       usage: completion.usage
     })
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('OpenAI API error:', error)
     
+    const errorMessage = error instanceof Error ? error.message : 'Failed to process AI request'
     return NextResponse.json({ 
-      error: error.message || 'Failed to process AI request',
+      error: errorMessage,
       details: process.env.NODE_ENV === 'development' ? error : undefined
     }, { status: 500 })
   }

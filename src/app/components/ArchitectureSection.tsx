@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Database, Brain, Shield, Cpu, Activity, Globe, Layers } from 'lucide-react'
+import { Database, Brain, Shield, Cpu, Activity, Globe, Layers } from 'lucide-react'
 
 export default function ArchitectureSection() {
   const architectureFlow = [

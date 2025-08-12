@@ -100,7 +100,7 @@ export default function FeaturesMetricsSection() {
     }
   ]
 
-  const timeline = [
+  // const timeline = [
     {
       week: "Week 1",
       tasks: [
@@ -119,7 +119,7 @@ export default function FeaturesMetricsSection() {
       ],
       status: "Planned"
     }
-  ]
+  ] */
 
   return (
     <section id="features" className="py-20 px-6">

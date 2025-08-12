@@ -20,7 +20,7 @@ const NOTIFICATION_THRESHOLDS = {
 interface NotificationRequest {
   chatId: number
   type: 'portfolio' | 'gas' | 'opportunity' | 'risk' | 'agent'
-  data: any
+  data: Record<string, unknown>
   priority: 'low' | 'medium' | 'high' | 'critical'
 }
 
@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get user notification state
-    let userState = notificationStates.get(chatId) || {
+    const userState = notificationStates.get(chatId) || {
       lastPortfolioValue: 0,
       lastGasPrices: 0,
       lastAlertTime: new Date(0),
@@ -97,10 +97,34 @@ export async function POST(request: NextRequest) {
   }
 }
 
+interface UserState {
+  lastPortfolioValue: number
+  lastGasPrices: number
+  lastAlertTime: Date
+  preferences: string[]
+  minimumChangeThreshold: number
+}
+
+interface NotificationData {
+  newValue?: number
+  newPrice?: number
+  apy?: number
+  protocol?: string
+  tvl?: string
+  description?: string
+  level?: string
+  recommendation?: string
+  event?: string
+  icon?: string
+  agentName?: string
+  message?: string
+  analysis?: string
+}
+
 async function shouldSendNotification(
   type: string, 
-  data: any, 
-  userState: any, 
+  data: NotificationData, 
+  userState: UserState, 
   priority: string
 ): Promise<boolean> {
   const now = new Date()
@@ -142,7 +166,7 @@ async function shouldSendNotification(
   }
 }
 
-function formatNotificationMessage(type: string, data: any, userState: any): string {
+function formatNotificationMessage(type: string, data: NotificationData, userState: UserState): string {
   const now = new Date().toLocaleTimeString()
 
   switch (type) {
@@ -168,13 +192,17 @@ function formatNotificationMessage(type: string, data: any, userState: any): str
   }
 }
 
-function updateUserState(chatId: number, type: string, data: any, currentState: any) {
+function updateUserState(chatId: number, type: string, data: NotificationData, currentState: UserState) {
   switch (type) {
     case 'portfolio':
-      currentState.lastPortfolioValue = data.newValue
+      if (data.newValue !== undefined) {
+        currentState.lastPortfolioValue = data.newValue
+      }
       break
     case 'gas':
-      currentState.lastGasPrices = data.newPrice
+      if (data.newPrice !== undefined) {
+        currentState.lastGasPrices = data.newPrice
+      }
       break
   }
   

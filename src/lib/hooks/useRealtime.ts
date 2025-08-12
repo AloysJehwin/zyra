@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 
 export interface RealtimeUpdate {
   type: string
-  [key: string]: any
+  [key: string]: unknown
   timestamp: string
 }
 
@@ -61,7 +61,7 @@ export function useRealtime(type: 'all' | 'agents' | 'portfolio' | 'market' | 't
         setUpdates(prev => [data, ...prev.slice(0, 99)])
       })
 
-      eventSource.onerror = (event) => {
+      eventSource.onerror = () => {
         setConnected(false)
         setError('Connection lost. Attempting to reconnect...')
         
