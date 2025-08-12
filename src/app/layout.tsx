@@ -28,8 +28,8 @@ const playfair = Playfair_Display({
 })
 
 export const metadata = {
-  title: 'Modern Web App - Revolutionary Experience',
-  description: 'Experience the future of web applications with stunning design and seamless interactions.',
+  title: 'ZYRA - Multi-Agent Yield Optimization & Risk Management',
+  description: 'Autonomous AI-driven DeFi portfolio manager. 24/7 yield optimization, risk management, and cross-chain strategies powered by intelligent agents.',
 }
 
 export default function RootLayout({

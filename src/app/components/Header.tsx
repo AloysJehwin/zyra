@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Menu, X, Zap } from 'lucide-react'
+import { Menu, X, Brain, Cpu, TrendingUp } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Header() {
@@ -18,34 +18,44 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div 
-            className="flex items-center space-x-2"
+            className="flex items-center space-x-3"
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
             <div className="relative">
-              <Zap className="w-8 h-8 text-purple-400" />
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                <Brain className="w-6 h-6 text-white" />
+              </div>
               <motion.div
-                className="absolute inset-0"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full flex items-center justify-center"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
               >
-                <Zap className="w-8 h-8 text-pink-400 opacity-50" />
+                <Cpu className="w-2.5 h-2.5 text-white" />
               </motion.div>
             </div>
-            <span className="text-2xl font-space font-bold gradient-text">ModernApp</span>
+            <div className="flex flex-col">
+              <span className="text-2xl font-space font-bold gradient-text">ZYRA</span>
+              <span className="text-xs text-purple-300 font-medium">AI Agent Network</span>
+            </div>
           </motion.div>
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {['Features', 'About', 'Pricing', 'Contact'].map((item, index) => (
+            {[
+              { name: 'Agents', href: '#agents' },
+              { name: 'Portfolio', href: '#portfolio' },
+              { name: 'Architecture', href: '#architecture' },
+              { name: 'Features', href: '#features' }
+            ].map((item, index) => (
               <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.name}
+                href={item.href}
                 className="text-gray-300 hover:text-white transition-colors font-medium relative group"
                 whileHover={{ y: -2 }}
                 transition={{ type: "spring", stiffness: 400 }}
               >
-                {item}
+                {item.name}
                 <motion.div
                   className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-purple-400 to-pink-400 group-hover:w-full transition-all duration-300"
                 />
@@ -75,14 +85,19 @@ export default function Header() {
           transition={{ duration: 0.3 }}
         >
           <div className="py-4 space-y-4">
-            {['Features', 'About', 'Pricing', 'Contact'].map((item) => (
+            {[
+              { name: 'Agents', href: '#agents' },
+              { name: 'Portfolio', href: '#portfolio' },
+              { name: 'Architecture', href: '#architecture' },
+              { name: 'Features', href: '#features' }
+            ].map((item) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
+                key={item.name}
+                href={item.href}
                 className="block text-gray-300 hover:text-white transition-colors py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                {item}
+                {item.name}
               </a>
             ))}
             <div className="pt-4">
