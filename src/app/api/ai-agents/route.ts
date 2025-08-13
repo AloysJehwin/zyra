@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import OpenAI from 'openai'
 
-const openai = new OpenAI({
+const openai = process.env.OPENAI_API_KEY ? new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
-})
+}) : null
 
 // Agent state management
 const agentStates = new Map<string, {
@@ -139,6 +139,14 @@ interface MarketData {
 
 async function analyzeWithAgent(agent: Agent, userProfile: UserProfile, marketData: MarketData) {
   try {
+    if (!openai) {
+      return NextResponse.json({
+        success: false,
+        analysis: 'AI analysis unavailable - OpenAI API key not configured',
+        icon: agent.icon
+      })
+    }
+
     const contextPrompt = `
     User Profile:
     - Name: ${userProfile?.name || 'User'}
