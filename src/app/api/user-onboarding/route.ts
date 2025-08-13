@@ -199,11 +199,11 @@ export async function GET(request: NextRequest) {
 }
 
 // Export user profiles for other services to use
-export function getUserProfile(chatId: number) {
+function getUserProfile(chatId: number) {
   return userProfiles.get(chatId)
 }
 
-export function updateUserProfile(chatId: number, updates: Partial<typeof userProfiles extends Map<number, infer T> ? T : never>) {
+function updateUserProfile(chatId: number, updates: Partial<typeof userProfiles extends Map<number, infer T> ? T : never>) {
   const profile = userProfiles.get(chatId)
   if (profile) {
     Object.assign(profile, updates)

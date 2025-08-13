@@ -142,16 +142,16 @@ async function shouldSendNotification(
 
   switch (type) {
     case 'portfolio':
-      const portfolioChange = Math.abs(data.newValue - userState.lastPortfolioValue) / userState.lastPortfolioValue
+      const portfolioChange = data.newValue ? Math.abs(data.newValue - userState.lastPortfolioValue) / userState.lastPortfolioValue : 0
       return portfolioChange >= (priority === 'high' ? NOTIFICATION_THRESHOLDS.CRITICAL_CHANGE : NOTIFICATION_THRESHOLDS.PORTFOLIO_CHANGE)
 
     case 'gas':
-      const gasChange = Math.abs(data.newPrice - userState.lastGasPrices) / userState.lastGasPrices
+      const gasChange = data.newPrice ? Math.abs(data.newPrice - userState.lastGasPrices) / userState.lastGasPrices : 0
       return gasChange >= NOTIFICATION_THRESHOLDS.GAS_PRICE_CHANGE
 
     case 'opportunity':
       // Only send if APY is above 10% or if it's a trusted protocol
-      return data.apy >= 10 || data.protocol === 'trusted'
+      return (data.apy && data.apy >= 10) || data.protocol === 'trusted'
 
     case 'risk':
       // Always send risk alerts
@@ -171,12 +171,12 @@ function formatNotificationMessage(type: string, data: NotificationData, userSta
 
   switch (type) {
     case 'portfolio':
-      const change = ((data.newValue - userState.lastPortfolioValue) / userState.lastPortfolioValue * 100).toFixed(2)
+      const change = data.newValue ? ((data.newValue - userState.lastPortfolioValue) / userState.lastPortfolioValue * 100).toFixed(2) : '0.00'
       const emoji = parseFloat(change) >= 0 ? '📈' : '📉'
-      return `${emoji} *Portfolio Update*\n\n💰 Value: $${data.newValue.toLocaleString()}\n📊 Change: ${change}%\n⚡ Trigger: Significant movement detected\n\n🕒 ${now}`
+      return `${emoji} *Portfolio Update*\n\n💰 Value: $${data.newValue?.toLocaleString() || 'N/A'}\n📊 Change: ${change}%\n⚡ Trigger: Significant movement detected\n\n🕒 ${now}`
 
     case 'gas':
-      return `⛽ *Gas Price Alert*\n\n💸 Current: ${data.newPrice} gwei\n📊 Change: ${((data.newPrice - userState.lastGasPrices) / userState.lastGasPrices * 100).toFixed(1)}%\n💡 ${data.newPrice < 20 ? 'Good time for transactions!' : 'Consider waiting for lower fees'}\n\n🕒 ${now}`
+      return `⛽ *Gas Price Alert*\n\n💸 Current: ${data.newPrice} gwei\n📊 Change: ${data.newPrice ? ((data.newPrice - userState.lastGasPrices) / userState.lastGasPrices * 100).toFixed(1) : '0.0'}%\n💡 ${(data.newPrice && data.newPrice < 20) ? 'Good time for transactions!' : 'Consider waiting for lower fees'}\n\n🕒 ${now}`
 
     case 'opportunity':
       return `💎 *New DeFi Opportunity*\n\n🏦 Protocol: ${data.protocol}\n💹 APY: ${data.apy}%\n💰 TVL: $${data.tvl}\n📋 ${data.description}\n\n🕒 ${now}`

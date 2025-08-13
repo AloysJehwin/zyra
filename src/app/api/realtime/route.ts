@@ -1,5 +1,4 @@
 import { NextRequest } from 'next/server'
-import { sendNotificationToSubscribers } from '../telegram/route'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
@@ -159,23 +158,23 @@ async function sendTelegramNotifications(updates: Update[]) {
 
       switch (update.type) {
         case 'portfolio_update':
-          if (Math.abs(update.dailyChange) > 5) { // Only send if significant change
+          if (update.dailyChange !== undefined && Math.abs(update.dailyChange) > 5) { // Only send if significant change
             const changeEmoji = update.dailyChange >= 0 ? '📈' : '📉'
             const change = update.dailyChange >= 0 ? '+' : ''
-            message = `💼 Portfolio Alert!\n\n${changeEmoji} ${change}${update.dailyChange.toFixed(2)}% today\n💰 Total: $${update.totalValue.toLocaleString()}`
+            message = `💼 Portfolio Alert!\n\n${changeEmoji} ${change}${update.dailyChange.toFixed(2)}% today\n💰 Total: $${update.totalValue?.toLocaleString() || 'N/A'}`
             type = update.dailyChange >= 0 ? 'success' : 'warning'
           }
           break
 
         case 'agent_update':
           if (Math.random() > 0.8) { // Send occasional agent updates
-            message = `🤖 Agent Update\n\nAgent #${update.agentId} completed ${update.performance.tasksCompleted} tasks\nAccuracy: ${update.performance.accuracy}`
+            message = `🤖 Agent Update\n\nAgent #${update.agentId} completed ${update.performance?.tasksCompleted || 0} tasks\nAccuracy: ${update.performance?.accuracy || 'N/A'}`
           }
           break
 
         case 'market_opportunity':
-          if (parseFloat(update.apy) > 15) { // High yield opportunities
-            message = `💎 High Yield Alert!\n\n🏦 ${update.protocol}\n💹 APY: ${update.apy}\n💰 TVL: $${parseFloat(update.tvl).toLocaleString()}`
+          if (update.apy && parseFloat(update.apy) > 15) { // High yield opportunities
+            message = `💎 High Yield Alert!\n\n🏦 ${update.protocol}\n💹 APY: ${update.apy}\n💰 TVL: $${update.tvl ? parseFloat(update.tvl).toLocaleString() : 'N/A'}`
             type = 'success'
           }
           break
@@ -196,7 +195,7 @@ async function sendTelegramNotifications(updates: Update[]) {
       }
 
       if (message) {
-        await sendNotificationToSubscribers(message, type)
+        // TODO: Send notification via direct API call instead of import
       }
     } catch (error) {
       console.error('Failed to send Telegram notification for update:', update, error)

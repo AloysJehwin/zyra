@@ -6,7 +6,7 @@ let bot: TelegramBot | null = null
 if (process.env.TELEGRAM_BOT_TOKEN) {
   try {
     bot = new TelegramBot(process.env.TELEGRAM_BOT_TOKEN, { polling: false })
-  } catch {
+  } catch (error) {
     console.error('Failed to initialize Telegram bot:', error)
   }
 }
@@ -235,7 +235,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json({ status: 'ok' })
-  } catch {
+  } catch (error) {
     console.error('Telegram webhook error:', error)
     return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 })
   }
@@ -254,7 +254,7 @@ export async function GET(request: NextRequest) {
     switch (action) {
       case 'send_notification':
         const message = searchParams.get('message')
-        const type = searchParams.get('type') || 'info'
+        const type = (searchParams.get('type') || 'info') as 'info' | 'success' | 'warning' | 'error'
         
         if (message) {
           await sendNotificationToSubscribers(message, type)
@@ -281,7 +281,7 @@ export async function GET(request: NextRequest) {
           availableActions: ['send_notification', 'subscribers', 'status']
         })
     }
-  } catch {
+  } catch (error) {
     console.error('Telegram GET error:', error)
     return NextResponse.json({ error: 'Request failed' }, { status: 500 })
   }
@@ -322,7 +322,7 @@ async function getMarketInsights(): Promise<string> {
          `💡 AI Recommendation: Consider defensive strategies`
 }
 
-export async function sendNotificationToSubscribers(message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') {
+async function sendNotificationToSubscribers(message: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') {
   if (!bot || subscribedChats.size === 0) return
 
   const emoji = {

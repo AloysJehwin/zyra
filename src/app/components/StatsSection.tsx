@@ -40,7 +40,7 @@ function AnimatedNumber({ number, suffix, inView }: { number: number, suffix: st
 
 export default function StatsSection() {
   const ref = useRef(null)
-  const inView = useInView(ref, { once: true, threshold: 0.3 })
+  const inView = useInView(ref, { once: true, amount: 0.3 })
 
   return (
     <section className="py-20 px-6" ref={ref}>

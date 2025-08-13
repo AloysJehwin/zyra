@@ -447,7 +447,7 @@ export default function HeroSection() {
               <div className="glass-effect p-8 rounded-2xl">
                 <div className="text-center mb-6">
                   <h3 className="text-xl font-semibold text-white mb-2">
-                    Let's Personalize Your AI Agents
+                    Let&apos;s Personalize Your AI Agents
                   </h3>
                   <p className="text-gray-300 text-sm">
                     Question {currentQuestion + 1} of {deploymentQuestions.length}

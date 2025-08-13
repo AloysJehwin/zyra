@@ -2,14 +2,14 @@
 
 import { createAppKit } from '@reown/appkit/react'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { mainnet, arbitrum, polygon, bsc, base } from '@reown/appkit/networks'
+import { mainnet, arbitrum, polygon, bsc, base, type AppKitNetwork } from '@reown/appkit/networks'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { WagmiProvider } from 'wagmi'
 import { projectId, metadata } from '../lib/config'
 
 const queryClient = new QueryClient()
 
-const networks = [mainnet, arbitrum, polygon, bsc, base]
+const networks: [AppKitNetwork, ...AppKitNetwork[]] = [mainnet, arbitrum, polygon, bsc, base]
 
 const wagmiAdapter = new WagmiAdapter({
   networks,

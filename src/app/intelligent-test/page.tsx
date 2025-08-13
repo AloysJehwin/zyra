@@ -155,16 +155,16 @@ export default function IntelligentTestPage() {
                     }`}
                   >
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-semibold">{result.test}</h3>
-                      <span className="text-sm text-gray-400">{result.timestamp}</span>
+                      <h3 className="font-semibold">{String(result.test)}</h3>
+                      <span className="text-sm text-gray-400">{String(result.timestamp)}</span>
                     </div>
                     <div className={`text-sm ${result.success ? 'text-green-400' : 'text-red-400'}`}>
                       {result.success ? '✅ Success' : '❌ Failed'}
                     </div>
-                    {result.error && (
-                      <p className="text-red-400 text-sm mt-2">Error: {result.error}</p>
+                    {Boolean(result.error) && (
+                      <p className="text-red-400 text-sm mt-2">Error: {String(result.error)}</p>
                     )}
-                    {result.data && (
+                    {Boolean(result.data) && (
                       <details className="mt-2">
                         <summary className="cursor-pointer text-sm text-purple-300">
                           View Response Data

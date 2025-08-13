@@ -342,7 +342,7 @@ export default function AgentsSection() {
               </div>
 
               <p className="text-gray-300 responsive-text-base mb-6 sm:mb-8 leading-relaxed">
-                {agents[activeAgent].description}
+                {'description' in agents[activeAgent] ? agents[activeAgent].description : 'Agent description not available'}
               </p>
 
               {/* Capabilities */}
