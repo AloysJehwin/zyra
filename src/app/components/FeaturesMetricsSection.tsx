@@ -100,7 +100,7 @@ export default function FeaturesMetricsSection() {
     }
   ]
 
-  // const timeline = [
+  /* const timeline = [
     {
       week: "Week 1",
       tasks: [

@@ -220,7 +220,7 @@ export default function IntelligentTestPage() {
   )
 }
 
-// const styles = `
+/* const styles = `
 .glass-effect {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
