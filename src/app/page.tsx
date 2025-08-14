@@ -17,7 +17,6 @@ export default function Home() {
     <ClientWrapper>
       <main className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-900 overflow-x-hidden">
         <div className="relative">
-          {/* Responsive animated background elements */}
           <div className="fixed inset-0 overflow-hidden pointer-events-none">
             <motion.div 
               className="absolute -top-20 sm:-top-40 -right-20 sm:-right-40 w-40 h-40 sm:w-80 sm:h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20"
